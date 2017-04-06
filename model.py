@@ -71,20 +71,19 @@ validation_generator = generator(validation_samples, batch_size=32)
 # MODEL
 from keras.models import Sequential
 from keras.layers import Flatten, Dense, Lambda, Cropping2D, Dropout
-from keras.layers.convolutional import Convolution2D
-from keras.layers.pooling import MaxPooling2D
+from keras.layers import MaxPooling2D, Conv2D
 from keras.callbacks import EarlyStopping
 
 model = Sequential()
 
 model.add(Lambda(lambda x: x / 255.0 - 0.5, input_shape=(160,320,3)))
 model.add(Cropping2D(cropping=((70, 25), (0, 0))))
-model.add(Convolution2D(24,5,5, subsample=(2,2), activation = 'relu'))
-model.add(Convolution2D(36,5,5, subsample=(2,2), activation = 'relu'))
-model.add(Convolution2D(48,5,5, subsample=(2,2), activation = 'relu'))
+model.add(Conv2D(24, (5,5), strides=(2,2), activation = 'relu'))
+model.add(Conv2D(36, (5,5), strides=(2,2), activation = 'relu'))
+model.add(Conv2D(48, (5,5), strides=(2,2), activation = 'relu'))
 model.add(Dropout(0.2))
-model.add(Convolution2D(64,3,3, activation = 'relu'))
-model.add(Convolution2D(64,3,3, activation = 'relu'))
+model.add(Conv2D(64, (3,3), activation = 'relu'))
+model.add(Conv2D(64, (3,3), activation = 'relu'))
 model.add(Flatten())
 model.add(Dense(100))
 model.add(Dropout(0.2))
@@ -105,3 +104,8 @@ model.fit_generator(train_generator,
                     nb_epoch=200)
 
 model.save('model.h5')
+
+#from keras.utils import plot_model
+#plot_model(model, to_file='model.png')
+
+#print(model.summary())

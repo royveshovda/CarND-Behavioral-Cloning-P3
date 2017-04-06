@@ -74,6 +74,37 @@ I trained the network once more and after running the simulator, the car was abl
 
 The final model architecture (model.py lines 78-95) consisted of a 9 layer neural network. 5 convolution layers, followed by 4 fully connected layers.
 
+The whole network is shown in the figure below.
+
+![network](./report_images/model.png "Network")
+
+The number of parameters are shown in the table below.
+
+
+| Layer (type)              | Output Shape        | Param # |
+|---------------------------|---------------------|---------|
+| lambda_1 (Lambda)         | (None, 160, 320, 3) | 0       |
+| cropping2d_1 (Cropping2D) | (None, 65, 320, 3)  | 0       |
+| conv2d_1 (Conv2D)         | (None, 31, 158, 24) | 1824    |
+| conv2d_2 (Conv2D)         | (None, 14, 77, 36)  | 21636   |
+| conv2d_3 (Conv2D)         | (None, 5, 37, 48)   | 43248   |
+| dropout_1 (Dropout)       | (None, 5, 37, 48)   | 0       |
+| conv2d_4 (Conv2D)         | (None, 3, 35, 64)   | 27712   |
+| conv2d_5 (Conv2D)         | (None, 1, 33, 64)   | 36928   |
+| flatten_1 (Flatten)       | (None, 2112)        | 0       |
+| dense_1 (Dense)           | (None, 100)         | 211300  |
+| dropout_2 (Dropout)       | (None, 100)         | 0       |
+| dense_2 (Dense)           | (None, 50)          | 5050    |
+| dropout_3 (Dropout)       | (None, 50)          | 0       |
+| dense_3 (Dense)           | (None, 10)          | 510     |
+| dropout_4 (Dropout)       | (None, 10)          | 0       |
+| dense_4 (Dense)           | (None, 1)           | 11      |
+
+
+Total params: 348,219
+
+During training the network also applies a few dropout layers to prevent overfitting.
+
 
 #### 3. Creation of the Training Set & Training Process
 

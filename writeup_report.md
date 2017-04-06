@@ -103,7 +103,16 @@ The number of parameters are shown in the table below.
 
 Total params: 348,219
 
-During training the network also applies a few dropout layers to prevent overfitting.
+During training the network also applies a few dropout layers to prevent overfitting (four dropout layers to be precise). In between the convolutional layers and the fully connected layers, I applied a flatten layer to convert the shape of the tensors to fit from a convolutional result into a fully connected layer. In total this gives a network of 17 layers, including input and preprocessing.
+
+As part of the network I also crop the images before sending them further in the network. I followed the fairly aggressive cropping suggested in the lectures. I was expecting this to be a bit too aggressive cropping, and was prepared to adjust the cropping a bit. As it turned out, the cropping worked very good. An example of the cropping is shown in the following two pictures.
+
+![example](./report_images/example.jpg "Example")
+![example](./report_images/example_cropped.jpg "Example Cropped")
+
+The purpose of this cropping is to remove the parts of the image not important for immediate steering. And the slice shown in the example above proved to do just that.
+
+Bu even before the cropping the network performs a lambda step to normalize the colors in each image. Instead of being in the range [0,255] for each colour channel, the lambda step normalizes the values to end up in the range [-1.0, 1.0]. This is a well know preprocess step to get neural networks to perform better. Neural networks operating between -1.0 and 1.0 seems to get the best performance due to how the training algorithms work.
 
 
 #### 3. Creation of the Training Set & Training Process
